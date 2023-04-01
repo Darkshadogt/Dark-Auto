@@ -1,6 +1,6 @@
 # Dark-Auto
 
-Auto Clicker + Key Presser made in Python
+Auto Clicker + Key Presser made with Python
 
 CustomTkinter: [https://github.com/TomSchimansky/CustomTkinter](https://github.com/TomSchimansky/CustomTkinter)
 
