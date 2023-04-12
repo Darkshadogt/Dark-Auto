@@ -8,7 +8,8 @@ Mac Download - [https://github.com/Darkshadogt/Dark-Auto/releases/tag/v1.0.0-Mac
 
 Window Download - [https://github.com/Darkshadogt/Dark-Auto/releases/tag/v1.0.0-Window](https://github.com/Darkshadogt/Dark-Auto/releases/tag/v1.0.0-Window)
 
-![Screen Shot 2023-03-30 at 8 37 15 PM](https://user-images.githubusercontent.com/122583206/228994218-9f7d006b-1684-4f05-bfbc-a7d20bb701e4.png)
+![Screenshot 2023-04-11 214559](https://user-images.githubusercontent.com/122583206/231326483-7dacfb2a-7cdc-4bc0-bcaf-61c344600ef3.png)
+
 
 **Note: Might look differently depends on your settings**
 
