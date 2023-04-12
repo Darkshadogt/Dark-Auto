@@ -1,9 +1,9 @@
-import tkinter as tk
 import pyautogui
-import threading
 import pynput
+import threading
 import customtkinter as ctk
 import tkinter.messagebox as mtk
+
 class Interface:
     def __init__(self):
         self.window = ctk.CTk()
@@ -371,7 +371,7 @@ class Interface:
         global pick_popup
         
         #Popup window
-        pick_popup = tk.Toplevel(self.window)
+        pick_popup = ctk.CTkToplevel(self.window)
         
         width, height = pyautogui.size()
         pick_popup.geometry(f"{width}x{height}")
