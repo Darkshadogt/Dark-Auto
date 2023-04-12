@@ -4,11 +4,11 @@ import sys
 file_dir = os.path.dirname(__file__)
 sys.path.append(file_dir)
 
-import GUI
+from classes.GUI import *
 import pyautogui
 
 #Inherits all the properties of the GUI including the inputs from user
-class AutoClicker(GUI.Interface):
+class AutoClicker(Interface):
     
     def start_clicking(self):
             #Setting a counter if the user is planning to repeat a certain times
