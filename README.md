@@ -12,7 +12,8 @@ Window Download - [https://github.com/Darkshadogt/Dark-Auto/releases/tag/v1.0.0-
 
 
 **Note: Might look differently depends on your settings**
-**Important: Must give access to the application in order for hotkeys to work**
+
+**Important: Must give permissions to the application in order for hotkeys to work**
 
 
 
