@@ -4,7 +4,7 @@ Auto Clicker + Key Presser made with Python
 
 CustomTkinter: [https://github.com/TomSchimansky/CustomTkinter](https://github.com/TomSchimansky/CustomTkinter)
 
-Mac Download - [https://github.com/Darkshadogt/Dark-Auto/releases/tag/v1.0.0-Mac](https://github.com/Darkshadogt/Dark-Auto/releases/tag/v1.0.0-Mac)
+Mac Download - [https://github.com/Darkshadogt/Dark-Auto/releases/tag/v1.0.1-Mac](https://github.com/Darkshadogt/Dark-Auto/releases/tag/v1.0.1-Mac)
 
 Window Download - [https://github.com/Darkshadogt/Dark-Auto/releases/tag/v1.0.0-Window](https://github.com/Darkshadogt/Dark-Auto/releases/tag/v1.0.0-Window)
 
