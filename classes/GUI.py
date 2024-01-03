@@ -9,60 +9,62 @@ class Interface:
         self.window = ctk.CTk()
         #Checks whether the auto is running or not
         self.on = False
+        self.clicker_listener = None
+        self.presser_listener = None
         #Text variable for hour interval
         self.hour = ctk.StringVar()
-        self.hour.trace("w", self.hours)
+        self.hour.trace_add("write", self.hours)
         #Text variable for minute interval
         self.min = ctk.StringVar()
-        self.min.trace("w", self.minutes)
+        self.min.trace_add("write", self.minutes)
         #Text variable for second interval
         self.sec = ctk.StringVar()
-        self.sec.trace("w", self.seconds)
+        self.sec.trace_add("write", self.seconds)
         #Text variable for millisecond interval
         self.milli = ctk.StringVar()
-        self.milli.trace("w", self.milliseconds)
+        self.milli.trace_add("write", self.milliseconds)
         #Text variable for click_position, either follow mouse or coordinate
         self.position = ctk.StringVar()
-        self.position.trace("w", self.mousewhere)
+        self.position.trace_add("write", self.mousewhere)
         #Text variable for x coordinate
         self.x_coordinate = ctk.StringVar()
-        self.x_coordinate.trace("w", self.xcoordinate)
+        self.x_coordinate.trace_add("write", self.xcoordinate)
         #Text variable for y coordinate
         self.y_coordinate = ctk.StringVar()
-        self.y_coordinate.trace("w", self.ycoordinate)
+        self.y_coordinate.trace_add("write", self.ycoordinate)
         #Variable to check the mouse type
         self.mousetype = ctk.StringVar()
-        self.mousetype.trace("w", self.mouse_button)
+        self.mousetype.trace_add("write", self.mouse_button)
         #Variable to check the click type
         self.clicktype = ctk.StringVar()
-        self.clicktype.trace("w", self.click_type)
+        self.clicktype.trace_add("write", self.click_type)
         #Variable to check if it repeats a certain time or infinite for auto clicker
         self.click_repeat_type = ctk.StringVar()
-        self.click_repeat_type.trace("w", self.clickrepeat_type)
+        self.click_repeat_type.trace_add("write", self.clickrepeat_type)
         #Variable to check the number of repeats for auto clicker
         self.click_repeats = ctk.StringVar()
-        self.click_repeats.trace("w", self.total_click_repeat)
+        self.click_repeats.trace_add("write", self.total_click_repeat)
         #Variable for the key the user wants to press
         self.keybutton = ctk.StringVar()
-        self.keybutton.trace("w", self.key_button)
+        self.keybutton.trace_add("write", self.key_button)
         #Variable to check the key type either single or hold
         self.keytype = ctk.StringVar()
-        self.keytype.trace("w", self.key_type)
+        self.keytype.trace_add("write", self.key_type)
         #Variable to check if it repeats a certain time or infinite for key presser
         self.key_repeat_type = ctk.StringVar()
-        self.key_repeat_type.trace("w", self.keyrepeat_type)
+        self.key_repeat_type.trace_add("write", self.keyrepeat_type)
         #Variable to check the number of repeats for key presser
         self.key_repeats = ctk.StringVar()
-        self.key_repeats.trace("w", self.press_repeat)
+        self.key_repeats.trace_add("write", self.press_repeat)
         #Variable to check the button that is the auto clicker hotkey
         self.clickerhotkey = ctk.StringVar()
-        self.clickerhotkey.trace("w", self.clickhotkey)
+        self.clickerhotkey.trace_add("write", self.clickhotkey)
         #Varaible to check the button that is the key presser hotkey
         self.presserhotkey = ctk.StringVar()
-        self.presserhotkey.trace("w", self.key_hotkey)
+        self.presserhotkey.trace_add("write", self.key_hotkey)
         #Variable to check the kind of auto user is using, either auto clicker, or key presser
         self.autokind = ctk.StringVar()
-        self.autokind.trace("w", self.type_of_auto)
+        self.autokind.trace_add("write", self.type_of_auto)
         self.stop = threading.Event()
         #Types of keys
         self.keys = [' ', '!', '"', '#', '$', '%', '&', "'", '(',
@@ -109,13 +111,13 @@ class Interface:
     
     #Listener for auto clicker
     def listen_clicker(self):
-        listener = pynput.keyboard.Listener(on_press=self.click_listener)
-        listener.start()
+        self.clicker_listener = pynput.keyboard.Listener(on_press=self.click_listener)
+        self.clicker_listener.start()
     
     #Listener for key presser
     def listen_presser(self):
-        listener = pynput.keyboard.Listener(on_press=self.key_listener)
-        listener.start()
+        self.presser_listener = pynput.keyboard.Listener(on_press=self.key_listener)
+        self.presser_listener.start()
     
     #Intervals between each click or press
     def interval(self):
@@ -325,7 +327,7 @@ class Interface:
         import clicker
         import presser
         
-        #Thread for the auto clicker
+        #Thread for the auto
         autoclicker = threading.Thread(target=clicker.AutoClicker.start_clicking, args=(self,))
         keypresser = threading.Thread(target=presser.KeyPresser.start_pressing, args=(self, ))
         
@@ -387,14 +389,15 @@ class Interface:
         hotkey1 = self.window.bind("<Key>", self.clicker_hotkey)
 
     def clicker_hotkey(self, event):
+        if self.clicker_listener != None:
+            self.clicker_listener.stop()
         key = event.char
         self.clickerhotkey.set(key)
         #Removes the bind so the function won't be called after keys pressed by user
         self.window.unbind("<Key>", hotkey1)
         
         #Running the listener on a separate thread
-        listener = threading.Thread(target=self.listen_clicker)
-        listener.start()
+        self.listen_clicker()
     
     #Setting the hotkey for key presser
     def set_presser_hotkey(self):
@@ -402,13 +405,14 @@ class Interface:
         hotkey2 = self.window.bind("<Key>", self.presser_hotkey)
     
     def presser_hotkey(self, event):
+        if self.presser_listener != None:
+            self.presser_listener.stop()
         key = event.char
         self.presserhotkey.set(key)
         self.window.unbind("<Key>", hotkey2)
         
         #Running the listener on a separate thread
-        listener = threading.Thread(target=self.listen_presser)
-        listener.start()
+        self.listen_presser()
     
     #User choose the coordinate location
     def pick_location(self, event):
@@ -424,23 +428,27 @@ class Interface:
     #Listener for auto clicker
     def click_listener(self, event):
         #Checking if the key matches the hotkey for auto clicker
-        if event.char == self.clickhotkey():
-            if self.on == False:
-                self.turn_on()
-            elif self.on == True:
-                self.turn_off()
+        try: 
+            if event.char == self.clickhotkey():
+                if self.on == False:
+                    self.turn_on()
+                elif self.on == True:
+                    self.turn_off()
+        except AttributeError:
+            pass
 
-        
     #Listener for key presser
     def key_listener(self, event):
         #Checking if the key matches the hotkey for key presser
-        if event.char == self.key_hotkey():
-            if self.on == False:
-                self.turn_on()
-            else:
-                self.turn_off()
+        try:
+            if event.char == self.key_hotkey():
+                if self.on == False:
+                    self.turn_on()
+                else:
+                    self.turn_off()
+        except AttributeError:
+            pass
 
-    
     #Returns the hour interval
     def hours(self, *args):
         if self.hour.get() == "":
